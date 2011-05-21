@@ -1,0 +1,155 @@
+<html>
+  <head>
+    <title>CloudQ Scheduler</title>
+    <style>
+      .slide { font-family:sans-serif; text-align:center; }
+      .slide.title { text-align:center; }
+      .slide.title .logo { width:50%; height:50%; }
+      .slide h1 { font-size:48em; font-weight:normal; }
+      .slide h2 { font-size:40em; font-weight:bold; }
+      .slide h1, h2 { letter-spacing:-.05em; }
+      .slide h1 .logo { height:1.75em; width:2.25em; vertical-align:middle; }
+      .slide h1 > button { font-size:1em; }
+      .slide a { border:none; color:black; background:#ddd; padding:.25em .5em; border-radius:.25em; }
+      .slide code { text-align:left; font-size:20em; font-family:monospace; padding:1em 2em; }
+      #demo-iframe { border:6em inset; }
+      #animated h1 { margin-top:.25em; }
+      #info { text-align:center; }
+    </style>    
+  </head>
+  <body>
+    <div id='slides'>
+      <div class='slide'>
+        <h1>Cloudq Scheduler</h1>
+      </div>
+      <div class='slide'>
+        <h1>A scalable event manager</h1>
+      </div>
+      <div class='slide'>
+        <h1>What is it?</h1>
+      </div>
+      <div class='slide'>
+        <h1>CS is a cloudq worker that consumes jobs that can
+        be scheduled and triggered based on that schedule</h1>
+      </div>
+      <div class='slide'>
+
+        <code><pre>
+{ job:
+  { 
+    klass: 'Add',
+    args: [{
+       name: 'backup-database',
+       schedule: '00 30 11 * * 2-6',
+       queue: 'backup',
+       job: {
+         klass: 'Backup',
+         args: ['full']
+       }
+    }]
+  }
+}
+        </pre></code>
+
+    </div>
+    <div class="slide">
+      <h1>When I publish a job to the scheduler queue.</h1>
+    </div>  
+    <div class="slide">
+      <h1>I send the job I want to schedule</h1>
+    </div>
+    <div class="slide">
+      <h1>The name of the queue to publish to</h1>
+    </div>
+    <div class="slide">
+      <h1>A unique name for the scheduled job</h1>
+    </div>
+    <div class="slide">
+      <h1>and this '00 30 11 * * 2-6'</h1>
+    </div>
+    <div class='slide'>
+      <h1>What?</h1>
+    </div>
+    <div class='slide'>
+      <h1>Its CRON!</h1>
+    </div>
+    <div class='slide'>
+      <h1>Every M - F at 11:30 AM</h1>
+    </div>
+    <div class='slide'>
+      <h1>Run my full backup</h1>
+    </div>
+    <div class='slide'>
+      <h1>Each Schedule must have unique name</h1>
+    </div>
+    <div class='slide'>
+      <h1>Which is easy to remove</h1>
+    </div>
+    <div class='slide code'>
+      <code><pre>
+{ job:
+  { 
+    klass: 'Remove',
+    args: [{
+      name: 'backup-database',
+    }]
+  }
+}
+        </pre>
+      </code>
+    </div> 
+    <div class='slide'>
+      <h1>Simply use any cloudq client to publish to the "Scheduler"
+        queue</h1>
+    </div>
+    <div class='slide'>
+      <h1>What is CRON?</h1>
+    </div>
+    <div class='slide'>
+      <h1>Six nodes to represent re-occuring or specific time</h1>
+    </div>
+    <div class='slide'>
+      <h1>First Node is 0-60 seconds</h1>
+    </div>
+    <div class='slide'>
+      <h1>
+        00 * * * * *
+        <br />
+        Every Minute at 00 second
+      </h1>
+    </div>
+    <div class='slide'>
+      <h1>
+        */5 * * * * *
+        <br />
+        Every 5 seconds
+      </h1>
+    </div>
+    <div class='slide'>
+      <h1>
+        10-20 * * * * *
+        <br />
+        Run each second between second 10 and 20 of a whole minute
+      </h1>
+    </div>
+    <div class='slide'>
+      <h1>
+        second minute hour day_of_month month day_of_week
+      </h1>
+    </div>
+    <div class='slide'>
+      <h1>What would I use it for?</h1>
+    </div>
+    <div class='slide'>
+      <h1>Tasks</h1>
+    </div>
+    <div class='slide'>
+      <h1>Push Reporting</h1>
+    </div>
+    <div class='slide'>
+      <h1>Reminders</h1>
+    </div>
+    <script type='text/javascript' src='http://usepow.com'></script>
+  </body>
+</html>
+
