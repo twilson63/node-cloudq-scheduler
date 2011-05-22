@@ -3,13 +3,15 @@ cloudq = require 'cloudq'
 cron = require 'cron'
 
 class Scheduler
+  VERSION: '0.0.2'
   delay: 60000 # every minute
 
   check_for_updates: ->
     # check cloudq for scheduler updates
-    event = cloudq.consume 'events'
-    if event.first == 'add'
-      @events.insert event.args[1], (err, new_event) -> @create_cron new_event
+    cloudq.consume 'scheduler', (err, resp) ->
+      if resp.klass == 'Add'
+        [name, schedule, queue, job] = resp.args
+        @events.insert { name, schedule, queue, job }, (err, event) -> @create_cron event
     #else TODO Need to figure out how to delete
     #  @events.remove JSON.stringify({ name: event.args[1].name }) if event.first == 'remove'
 
@@ -19,7 +21,7 @@ class Scheduler
   
   create_cron: (event) ->
     new cron.CronJob event.schedule, ->
-      require('cloudq').cloudq.publish event.queue, event.klass, event.args
+      require('cloudq').cloudq.publish event.queue, event.job.klass, event.job.args
 
   constructor: (db = 'localhost:27017', collection = 'events') ->
     @events = monogo.db(db).collection(collection)
